@@ -60,6 +60,7 @@ The program can be run from the command line with the following options:
 make
 ```
 3. This will compile the source files and generate the executable `dbview` in the `bin` directory.
+4. This will also create an example database for showcasing the usage.
 
 ### Cleaning Up
 
