@@ -9,11 +9,11 @@
 #include "parse.h"
 
 void print_usage(char *argv[]) {
-  printf("====================================================");
+  printf("====================================================\n");
   printf("Usage: %s -n -f <database file>\n", argv[0]); 
   printf("\t -n  -  create new database file\n");
   printf("\t -f  -  (required) path to database file\n");
-  printf("====================================================");
+  printf("====================================================\n");
 }
 
 int main(int argc, char *argv[]) { 
@@ -74,6 +74,8 @@ int main(int argc, char *argv[]) {
     print_usage(argv);
     return 0;
   }
+  
+  printf("====================================================\n");
 
   if(newfile) {
     dbfd = create_db_file(filepath);
@@ -103,6 +105,7 @@ int main(int argc, char *argv[]) {
   
   printf("Newfile: %d\n", newfile); 
   printf("Filepath: %s\n", filepath);
+  printf("====================================================\n");
 
   if(read_employees(dbfd, dbhdr, &employees) != STATUS_SUCCESS) {
     printf("Failed to read employees\n");
@@ -141,7 +144,6 @@ int main(int argc, char *argv[]) {
 
   output_file(dbfd, dbhdr, employees);
 
-  printf("====================================================");
   printf("====================================================\n");
   return 0;
 }
