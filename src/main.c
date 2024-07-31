@@ -116,6 +116,7 @@ int main(int argc, char *argv[]) {
     dbhdr -> count ++; 
     employees = (struct employee_t*) realloc(employees, dbhdr -> count * (sizeof(struct employee_t)));
     add_record(dbhdr, employees, addstring);
+    free(addstring); 
   }
 
   if(total) {
@@ -129,12 +130,14 @@ int main(int argc, char *argv[]) {
     employees = (struct employee_t*)realloc(employees, dbhdr -> count * sizeof(struct employee_t));
     printf("Employee with name %s deleted, remaining %d employees\n", delname, dbhdr -> count);
     num_employees(dbhdr);
+    free(delname); 
   }
 
   if(upstring) {
     if(update_hours(dbhdr, employees, upstring) == STATUS_ERROR) {
       printf("Update failed!\n"); 
     }
+    free(upstring); 
   }
 
   if(listing) {
@@ -143,6 +146,8 @@ int main(int argc, char *argv[]) {
 
 
   output_file(dbfd, dbhdr, employees);
+  close(dbfd);
+  free(employees); 
 
   printf("====================================================\n");
   return 0;

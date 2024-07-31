@@ -75,7 +75,7 @@ void num_employees(struct dbheader_t *dbhdr) {
 void list_employees(struct dbheader_t *dbhdr, struct employee_t *employees) {
   for(int i = 0 ; i < dbhdr -> count; i++) {
     printf("Employee : %d\n", i+1); 
-    printf("%s, %s, %d\n", employees[i].name, employees[i].address, employees[i].hours);
+    printf("\t%s, %s, %d\n", employees[i].name, employees[i].address, employees[i].hours);
   }
   return;
 }
@@ -223,6 +223,7 @@ int create_db_header(int fd, struct dbheader_t **headerOut) {
   header -> filesize = sizeof(struct dbheader_t);
 
   *headerOut = header;
+  free(header);
   return STATUS_SUCCESS;
 }
 
