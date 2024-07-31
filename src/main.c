@@ -10,9 +10,14 @@
 
 void print_usage(char *argv[]) {
   printf("====================================================\n");
-  printf("Usage: %s -n -f <database file>\n", argv[0]); 
-  printf("\t -n  -  create new database file\n");
-  printf("\t -f  -  (required) path to database file\n");
+  printf("Usage: %s -n -f <database file>\n\n", argv[0]); 
+  printf("\t -n  -  \t(required if file does not exist) create new database file\n");
+  printf("\t -f arg -  \t(required) path to database file\n\n");
+  printf("\t -a arg -  \tAdd a record. Ex- -a \"NAME, ADDRESS, HOURS\"\n");
+  printf("\t -u arg -  \tUpdtae number of hours for a person. Ex- -u \"NAME, NEW_HOURS\"\n");
+  printf("\t -d arg -  \tDelete a record by name. Ex- -d \"NAME\"\n");
+  printf("\t -t -  \t\tGet total number of records\n");
+  printf("\t -l -  \t\tList all the records.\n");
   printf("====================================================\n");
 }
 
@@ -116,7 +121,6 @@ int main(int argc, char *argv[]) {
     dbhdr -> count ++; 
     employees = (struct employee_t*) realloc(employees, dbhdr -> count * (sizeof(struct employee_t)));
     add_record(dbhdr, employees, addstring);
-    free(addstring); 
   }
 
   if(total) {
@@ -130,14 +134,12 @@ int main(int argc, char *argv[]) {
     employees = (struct employee_t*)realloc(employees, dbhdr -> count * sizeof(struct employee_t));
     printf("Employee with name %s deleted, remaining %d employees\n", delname, dbhdr -> count);
     num_employees(dbhdr);
-    free(delname); 
   }
 
   if(upstring) {
     if(update_hours(dbhdr, employees, upstring) == STATUS_ERROR) {
       printf("Update failed!\n"); 
     }
-    free(upstring); 
   }
 
   if(listing) {
@@ -148,6 +150,7 @@ int main(int argc, char *argv[]) {
   output_file(dbfd, dbhdr, employees);
   close(dbfd);
   free(employees); 
+  free(dbhdr);
 
   printf("====================================================\n");
   return 0;
